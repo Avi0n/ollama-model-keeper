@@ -70,7 +70,7 @@ async def monitor_for_other_models(target_model):
                     other_models = [name for name in model_names if name != target_model]
                     logger.info(f"Other models detected: {other_models}")
                     return True
-                logger.info(f"Only {target_model} is loaded. Checking again in 1 minute...")
+                logger.debug(f"{target_model} is loaded. Checking again in 1 minute...")
                 await asyncio.sleep(MONITOR_INTERVAL)
             else:
                 # Target model is not loaded, check for other models
@@ -116,7 +116,7 @@ async def main():
 
             if TARGET_MODEL in model_names:
                 # Target model is loaded, monitor for others
-                logger.debug(f"{TARGET_MODEL} is already loaded. Monitoring for other models...")
+                logger.info(f"{TARGET_MODEL} is already loaded. Monitoring for other models...")
                 another_model_loaded = await monitor_for_other_models(TARGET_MODEL)
                 if not another_model_loaded:
                     logger.info(f"No models are loaded now. Loading {TARGET_MODEL}...")
