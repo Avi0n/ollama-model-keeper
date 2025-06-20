@@ -105,10 +105,10 @@ async def monitor_for_other_models(target_model):
 
 async def main():
     """Main logic to check and load models, running indefinitely."""
-    logger.info(f"Starting OllamaLoader at {datetime.now()}...")
+    logger.info(f"Starting Ollama Model Keeper...")
     while True:
         try:
-            logger.info(f"Entering main cycle at {datetime.now()}...")
+            logger.debug(f"Entering main cycle at {datetime.now()}...")
             # Check if any models are loaded
             response = await check_loaded_models()
             logger.debug(f"Current models: {response.get('models', [])}")
