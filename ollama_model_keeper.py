@@ -3,9 +3,10 @@ import ollama
 from datetime import datetime
 import time
 import logging
+import os
 
 # Logging configuration
-LOG_LEVEL = "INFO"  # Options: "DEBUG", "INFO"
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
 logging.basicConfig(
     level=getattr(logging, LOG_LEVEL),
     format='%(asctime)s [%(levelname)s] %(message)s',
@@ -19,8 +20,8 @@ logging.getLogger("httpx").setLevel(logging.DEBUG if LOG_LEVEL == "DEBUG" else l
 # Global variables
 TARGET_MODEL = os.environ.get("TARGET_MODEL", "gemma3")
 OLLAMA_URI = os.environ.get("OLLAMA_URI", "http://localhost:11434")
-CYCLE_INTERVAL = os.environ.get("CYCLE_INVERVAL", 5) # Seconds between cycles
-MONITOR_INTERVAL = os.environ.get("OLLAMA_URI", 60)  # Seconds between monitor checks
+CYCLE_INTERVAL = float(os.environ.get("CYCLE_INTERVAL", 5))
+MONITOR_INTERVAL = float(os.environ.get("MONITOR_INTERVAL", 60))
 client = ollama.Client(host=OLLAMA_URI)
 
 async def check_loaded_models():
