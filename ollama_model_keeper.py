@@ -116,7 +116,7 @@ async def main():
 
             if TARGET_MODEL in model_names:
                 # Target model is loaded, monitor for others
-                logger.info(f"{TARGET_MODEL} is already loaded. Monitoring for other models...")
+                logger.debug(f"{TARGET_MODEL} is already loaded. Monitoring for other models...")
                 another_model_loaded = await monitor_for_other_models(TARGET_MODEL)
                 if not another_model_loaded:
                     logger.info(f"No models are loaded now. Loading {TARGET_MODEL}...")
