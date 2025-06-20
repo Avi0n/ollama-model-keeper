@@ -17,10 +17,10 @@ logger = logging.getLogger(__name__)
 logging.getLogger("httpx").setLevel(logging.DEBUG if LOG_LEVEL == "DEBUG" else logging.WARNING)
 
 # Global variables
-TARGET_MODEL = "ENTER_MODEL_HERE"
-OLLAMA_URI = "http://localhost:11434"
-CYCLE_INTERVAL = 5  # Seconds between cycles
-MONITOR_INTERVAL = 60  # Seconds between monitor checks
+TARGET_MODEL = os.environ.get("TARGET_MODEL", "gemma3")
+OLLAMA_URI = os.environ.get("OLLAMA_URI", "http://localhost:11434")
+CYCLE_INTERVAL = os.environ.get("CYCLE_INVERVAL", 5) # Seconds between cycles
+MONITOR_INTERVAL = os.environ.get("OLLAMA_URI", 60)  # Seconds between monitor checks
 client = ollama.Client(host=OLLAMA_URI)
 
 async def check_loaded_models():
