@@ -22,6 +22,7 @@ TARGET_MODEL = os.environ.get("TARGET_MODEL", "gemma3")
 OLLAMA_URI = os.environ.get("OLLAMA_URI", "http://localhost:11434")
 CYCLE_INTERVAL = float(os.environ.get("CYCLE_INTERVAL", 5))
 MONITOR_INTERVAL = float(os.environ.get("MONITOR_INTERVAL", 60))
+CONTEXT_LENGTH = int(os.environ.get("CONTEXT_LENGTH", 4096))
 client = ollama.Client(host=OLLAMA_URI)
 
 async def check_loaded_models():
@@ -37,9 +38,9 @@ async def check_loaded_models():
 async def load_model(model_name):
     """Load a model using an empty /api/generate call with keep_alive=-1."""
     try:
-        response = client.generate(model=model_name, keep_alive=-1)
+        response = client.generate(model=model_name, keep_alive=-1, options={'num_ctx': CONTEXT_LENGTH})
         logger.debug(f"Generate response for loading {model_name}: {response}")
-        logger.info(f"Successfully loaded model: {model_name} with keep_alive=-1")
+        logger.info(f"Successfully loaded model: {model_name} with keep_alive=-1 and context length {CONTEXT_LENGTH}")
     except Exception as e:
         logger.error(f"Error loading model {model_name}: {e}")
         raise
